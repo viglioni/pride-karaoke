@@ -6,20 +6,17 @@ import { prideTsv } from '../shared/pride-list'
 const lines = R.pipe(
   R.split('\n'),
   R.map<string, string[]>(R.split('\t')),
-  R.map<string[], string[]>(R.drop(2)),
-  R.map<string[], string[]>(R.dropLast<string>(1)),
 )(prideTsv)
 
-const titleFields = R.head(lines) ?? []
+const [titleFields, ...songRows] = lines ?? []
 
 const createTitle = (field: string) => ({ title: field, field })
 
 const createData = R.zipObj(titleFields)
-type Data = ReturnType<typeof createData>
 
 const columns = R.map(createTitle, titleFields)
 
-const songs = R.pipe(R.drop(1), R.map<string[], Data>(createData))(lines)
+const songs = R.map(createData, songRows)
 
 const Home = (): JSX.Element => {
   return (
