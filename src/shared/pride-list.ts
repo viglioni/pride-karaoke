@@ -1,4 +1,5 @@
 /* eslint-disable no-tabs */
+/* eslint-disable no-irregular-whitespace */
 
 export const prideTsv = `Cód	Título	Intérprete
 6549	SAO PAULO	365
